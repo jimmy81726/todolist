@@ -3,7 +3,17 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 
-def user_login(request):
+
+def user_logout(requset):
+    logout(requset)
+
+    return redirect('login')
+
+
+def user_profile(requset):
+    return render(requset,'user/profile.html')
+
+def user_login(request): 
     message=''
     if request.method=='POST':
         print(request.POST)
@@ -20,7 +30,7 @@ def user_login(request):
                 user=authenticate(request,username=username,password=password)
                 print(user) 
                 if not user:
-                    # 篩選姓名
+                    # 篩選帳號
                     if User.objects.filter(username=username):                    
                         message='密碼錯誤!'
                     else:
@@ -28,6 +38,7 @@ def user_login(request):
                 else:
                     login(request,user)
                     message='登入成功!'
+                    return redirect('profile')
 
 
     return render(request,'user/login.html',{'message':message})
@@ -54,8 +65,11 @@ def user_register(request):
                 if User.objects.filter(username=username).exists():
                     message='帳號重複'
                 else:
-                    User.objects.create_user(username=username,password=password1).save()
+                    user=User.objects.create_user(username=username,password=password1)
+                    user.save()
+                    login(request,user)
                     message='註冊成功!'
+                    return redirect('profile')
                 #　帳號重複檢查
         except Exception as e:
             print(e)
