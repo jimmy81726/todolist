@@ -18,5 +18,6 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 urlpatterns = [   
-    path('',views.todo,name='todo'),    
+    path('',views.todolist,name='todolist'),    
+    path('todo/<int:id>',views.todo,name='todo'),    
 ]

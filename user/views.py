@@ -10,8 +10,14 @@ def user_logout(requset):
     return redirect('login')
 
 
-def user_profile(requset):
-    return render(requset,'user/profile.html')
+def user_profile(requset,id):
+    user=None
+    try:
+        user=User.objects.get(pk=id)
+    except Exception as e:
+        print(e)
+
+    return render(requset,'user/profile.html',{'user':user})
 
 def user_login(request): 
     message=''
@@ -38,7 +44,7 @@ def user_login(request):
                 else:
                     login(request,user)
                     message='登入成功!'
-                    return redirect('profile')
+                    return redirect('todolist')
 
 
     return render(request,'user/login.html',{'message':message})
@@ -69,7 +75,7 @@ def user_register(request):
                     user.save()
                     login(request,user)
                     message='註冊成功!'
-                    return redirect('profile')
+                    return redirect('todolist')
                 #　帳號重複檢查
         except Exception as e:
             print(e)
