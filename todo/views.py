@@ -1,6 +1,20 @@
 from django.shortcuts import render
 from .models import Todo
+from .forms import TodoForm
 # Create your views here.
+
+def create_todo(request):
+    message=''
+    form=TodoForm()
+    if request.method=='POST':
+        print(request.POST)
+        form=TodoForm(request.POST)
+        todo=form.save(commit=False)
+        todo.user=request.user
+        todo.save()
+        message='建立todo成功!'
+
+    return render(request,'todo/create_todo.html',{'form':form,'message':message})
 
 def todo(request,id):
     todo=None
