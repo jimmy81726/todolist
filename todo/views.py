@@ -4,10 +4,25 @@ from .forms import TodoForm
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required
+def comoleted_todo(request,id):
+    todo=Todo.objects.get(pk=id)
+    todo.completed=True
+    todo.date_completed=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    todo.save()
+
+    return redirect('todolist')
 
 
 @login_required
-def completed_todo(request):
+def delete_todo(request,id):
+    todo=Todo.objects.get(pk=id)
+    todo.delete()
+
+    return redirect('todolist')
+
+@login_required
+def completed_todolist(request):
     todos=None
     user=request.user
     if user.is_authenticated:
