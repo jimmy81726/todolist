@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Todo
 from .forms import TodoForm
+from datetime import datetime
 # Create your views here.
 
 def create_todo(request):
@@ -10,19 +11,37 @@ def create_todo(request):
         print(request.POST)
         form=TodoForm(request.POST)
         todo=form.save(commit=False)
-        todo.user=request.user
+        todo.user=request.user        
         todo.save()
         message='建立todo成功!'
+        return redirect('todolist')
 
     return render(request,'todo/create_todo.html',{'form':form,'message':message})
 
 def todo(request,id):
-    todo=None
+    todo=None    
+    message=''
     try:
-        todo=Todo.objects.get(id=id)
+        if request.method=='GET':
+            todo=Todo.objects.get(id=id)
+            # 將取得的todo實例給表單
+            form=TodoForm(instance=todo)
+
+        if request.method=='POST':
+            print(request.POST)
+            form=TodoForm(request.POST,instance=todo)
+            if form.is_valid():                  
+                todo=form.save(commit=False)
+                if todo.completed:
+                    todo.date_completed=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                todo.save()         
+                message='更新成功!'
+                
+
     except Exception as e:
         print(e)
-    return render(request,'todo/todo.html',{'todo':todo})
+        message='更新失敗!'
+    return render(request,'todo/todo.html',{'todo':todo,'form':form,'message':message})
 
 def todolist(request):
     todos=None
