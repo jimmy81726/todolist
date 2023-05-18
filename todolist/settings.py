@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-+r1d!fyzyyyv#%wl5&z0la&j8%*5!$(%#p43&^i3xg@dgl9opd"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -80,6 +80,17 @@ DATABASES = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
+}
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'todolist',
+        'USER': 'root',
+        'PASSWORD': 'password',
+        'HOST': 'database-1.cr1dzex4jzdk.ap-northeast-1.rds.amazonaws.com',
+        'PORT': '3306',
+    }   
 }
 
 
