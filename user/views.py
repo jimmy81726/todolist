@@ -60,9 +60,10 @@ def user_register(request):
     if request.method=='POST':
         try:
             username=request.POST.get('username')
+            email=request.POST.get('email')
             password1=request.POST.get('password1')
             password2=request.POST.get('password2')
-            print(username,password1,password2)
+            print(username,password1,password2,email)
 
             if len(password1)<8:
                 message='密碼過短'
@@ -72,7 +73,7 @@ def user_register(request):
                 if User.objects.filter(username=username).exists():
                     message='帳號重複'
                 else:
-                    user=User.objects.create_user(username=username,password=password1)
+                    user=User.objects.create_user(username=username,password=password1,email=email)
                     user.save()
                     login(request,user)
                     message='註冊成功!'

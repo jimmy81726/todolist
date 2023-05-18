@@ -7,7 +7,24 @@
 <hr>
 <form action="" method="POST">
     {% csrf_token %}
-    {{form.as_p}}
+
+    <p>
+        <label for="username">帳號</label>
+        <input type="text" name="username" required>
+    </p>
+    <p>
+        <label for="email">信箱</label>
+        <input type="email" name="email" required>
+    </p>
+    <p>
+        <label for="password1">密碼</label>
+        <input type="password" name="password1" required>
+    </p>
+    <p>
+        <label for="password2">確認密碼</label>
+        <input type="password" name="password2" required>
+    </p>
+    <!-- {{form.as_p}} -->
     <button type="submit">註冊</button>
 </form>
 {% endblock %}

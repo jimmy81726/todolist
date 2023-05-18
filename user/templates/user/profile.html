@@ -10,6 +10,7 @@
 {% if user.is_superuser == 1 %}
 <li style="color:blue">(管理員)</li>
 {% endif %}
+<li>信箱:{{user.email}}</li>
 <li>建立時間:{{user.date_joined}}</li>
 <li>登入時間:{{user.last_login}}</li>
 {% else %}
