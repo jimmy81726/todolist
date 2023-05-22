@@ -17,11 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
-urlpatterns = [   
-    path('',views.todolist,name='todolist'),    
-    path('todo/<int:id>',views.todo,name='todo'),    
-    path('create/',views.create_todo,name='create-todo'),    
-    path('delete/<int:id>',views.delete_todo,name='delete-todo'),
-    path('completed/<int:id>',views.comoleted_todo,name='completed-todo'),
-    path('completed-todolist/',views.completed_todolist,name='completed-todolist'),    
+urlpatterns = [
+    path('', views.todolist, name='todolist'),
+    path('todo/<int:id>', views.todo, name='todo'),
+    path('create/', views.create_todo, name='create-todo'),
+    path('delete/<int:id>', views.delete_todo, name='delete-todo'),
+    path('completed/<int:id>', views.comoleted_todo, name='completed-todo'),
+    path('completed-todolist/', views.completed_todolist,
+         name='completed-todolist'),
+    path('api/todos/', views.todos_api, name='todos-api'),
+    path('api/todos/<int:id>', views.todo_api, name='todo-api'),
+    path('api/todos/user/<int:user_id>/',
+         views.user_todos_api, name='user-todos-api'),
+
 ]

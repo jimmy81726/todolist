@@ -3,6 +3,83 @@ from .models import Todo
 from .forms import TodoForm
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
+import json
+from django.http import JsonResponse,HttpResponse
+from .models import Todo
+
+
+def user_todos_api(request, user_id):
+    todo_list = []
+    try:
+        user = User.objects.get(id=user_id)
+        todos = Todo.objects.filter(user=user)        
+        for todo in todos:
+            todo_data = {
+                'id': todo.id,
+                'title': todo.title,
+                'text': todo.text,
+                'created': todo.created.strftime('%Y-%m-%d %H:%M:%S'),
+                'date_completed': todo.date_completed.strftime('%Y-%m-%d %H:%M:%S') if todo.date_completed else None,
+                'important': todo.important,
+                'completed': todo.completed,
+                'user': todo.user.username,
+            }
+            todo_list.append(todo_data)
+    except Exception as e:
+        print(e)
+          
+    todo_data = json.dumps(todo_list, ensure_ascii=False)
+      
+    return HttpResponse(todo_data,content_type='application/json')
+
+
+def todo_api(request,id):
+    todo_data = {}
+    try:
+        todo = Todo.objects.get(pk=id)       
+        if todo is not None: 
+            todo_data = {
+                'id': todo.id,
+                'title': todo.title,
+                'text': todo.text,
+                'created': todo.created.strftime('%Y-%m-%d %H:%M:%S'),
+                'date_completed': todo.date_completed.strftime('%Y-%m-%d %H:%M:%S') if todo.date_completed else None,
+                'important': todo.important,
+                'completed': todo.completed,
+                'user': todo.user.username,
+            }
+    except Exception as e:
+        print(e)
+        
+    todo_data = json.dumps(todo_data, ensure_ascii=False)
+      
+    return HttpResponse(todo_data,content_type='application/json')
+
+def todos_api(request):
+    todos = Todo.objects.all()
+    todo_list = []
+    for todo in todos:
+        todo_data = {
+            'id': todo.id,
+            'title': todo.title,
+            'text': todo.text,
+            'created': todo.created.strftime('%Y-%m-%d %H:%M:%S'),
+            'date_completed': todo.date_completed.strftime('%Y-%m-%d %H:%M:%S') if todo.date_completed else None,
+            'important': todo.important,
+            'completed': todo.completed,
+            'user': todo.user.username,
+        }
+        todo_list.append(todo_data)
+        
+    todo_json = json.dumps(todo_list, ensure_ascii=False)
+    print(todo_json)
+    return HttpResponse(todo_json,content_type='application/json')
+    
+
+
+
 # Create your views here.
 @login_required
 def comoleted_todo(request,id):

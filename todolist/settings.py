@@ -89,11 +89,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'todolist',
         'USER': 'root',
-        'PASSWORD': '',
-        #'HOST': 'localhost',
-        'HOST': 'database-1.ap-northeast-1.rds.amazonaws.com',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        # 'HOST': 'database-1.ap-northeast-1.rds.amazonaws.com',
         'PORT': '3306',
-    }   
+    }
 }
 
 
@@ -140,4 +140,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-LOGIN_URL='/user/login/'
+LOGIN_URL = '/user/login/'
