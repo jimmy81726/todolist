@@ -1,20 +1,56 @@
 {% extends 'base.html' %}
 {% block title %}
-登入頁面
+Login
+{% endblock %}
+{% block css %}
+<style>
+    /* input {
+        text-align: center;
+    } */
+</style>
 {% endblock %}
 {% block content %}
-<h1>Login</h1>
-<hr>
-<form action="" method="POST">
-    {% csrf_token %}<br>
-    <label for="username">username</label>
-    <input type="text" name="username" id="username"><br>
-    <label for="password">password</label>
-    <input type="password" name="password" id="password"><br>
-    <p>
-        <input type="submit" value="登入" name="login">
-        <input type="submit" value="註冊" name="register">
-        <input type="reset" value="重置">
-    </p>
-</form>
+<div class="hero is-info is-fullheight-with-navbar">
+    <div class="hero-body">
+        <div class="container">
+            <!-- <h1 class="is-size-4 has-text-right">登入</h1> -->
+            <div class="columns is-centered">
+                <div class="column is-4">
+                    <form action="" class="box" method="POST">
+                        {% csrf_token %}
+                        <div class="field">
+                            <label class="label"> 使用者名稱 </label>
+                            <div class="control has-icons-left">
+                                <input type="text" class="input" name="username" placeholder="Jerry Chen" />
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label"> 使用者密碼 </label>
+                            <div class="control has-icons-left">
+                                <input type="password" class="input" name="password" placeholder="********" />
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-lock"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="field has-text-centered">
+                            <input type="submit" class="button is-success is-normal" name="login" value="登入" />
+                            <input type="submit" class="button is-warning is-normal" name="register" value="註冊" />
+                            <input type="reset" class="button is-danger is-normal" name="register" value="清除" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="columns is-centered">
+                <div class="notification is-warning has-text-centered">
+                    <button class="delete has-text"></button>
+                    <span class="has-text-danger">{{message}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
