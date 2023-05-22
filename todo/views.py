@@ -58,22 +58,26 @@ def todo_api(request,id):
     return HttpResponse(todo_data,content_type='application/json')
 
 def todos_api(request):
-    todos = Todo.objects.all()
-    todo_list = []
-    for todo in todos:
-        todo_data = {
-            'id': todo.id,
-            'title': todo.title,
-            'text': todo.text,
-            'created': todo.created.strftime('%Y-%m-%d %H:%M:%S'),
-            'date_completed': todo.date_completed.strftime('%Y-%m-%d %H:%M:%S') if todo.date_completed else None,
-            'important': todo.important,
-            'completed': todo.completed,
-            'user': todo.user.username,
-        }
-        todo_list.append(todo_data)
-        
-    todo_json = json.dumps(todo_list, ensure_ascii=False)
+    todo_json=[]
+    try:
+        todos = Todo.objects.all()
+        todo_list = []
+        for todo in todos:
+            todo_data = {
+                'id': todo.id,
+                'title': todo.title,
+                'text': todo.text,
+                'created': todo.created.strftime('%Y-%m-%d %H:%M:%S'),
+                'date_completed': todo.date_completed.strftime('%Y-%m-%d %H:%M:%S') if todo.completed else None,
+                'important': todo.important,
+                'completed': todo.completed,
+                'user': todo.user.username,
+            }
+            todo_list.append(todo_data)
+            
+        todo_json = json.dumps(todo_list, ensure_ascii=False)
+    except Exception as e:
+        print(e)
     print(todo_json)
     return HttpResponse(todo_json,content_type='application/json')
     
@@ -116,6 +120,8 @@ def create_todo(request):
             print(request.POST)
             form=TodoForm(request.POST)
             todo=form.save(commit=False)
+            if todo.completed:
+                todo.date_completed=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             todo.user=request.user        
             todo.save()
             #message='建立todo成功!'
