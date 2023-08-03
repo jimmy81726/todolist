@@ -22,6 +22,7 @@ from . import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('user/',include('user.urls')), 
+    path('api/',include('api.urls')), 
     path('',include('todo.urls')), 
 ]
 
