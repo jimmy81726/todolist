@@ -10,6 +10,54 @@ from django.http import JsonResponse,HttpResponse
 from .models import Todo
 
 
+def user_api(request,id):
+    user_data = {}
+    try:
+        user = User.objects.get(pk=id)       
+        if user is not None: 
+            user_data = {
+                'id': user.id,
+                'username': user.username,         
+                'password':user.password,  
+                'is_superuser':user.is_superuser,  
+                'user.last_login':user.last_login.strftime('%Y-%m-%d \
+                                                           %H:%M:%S:%f')
+            }
+    except Exception as e:
+        print(e)
+        
+    user_data = json.dumps(user_data, ensure_ascii=False)
+      
+    return HttpResponse(user_data,content_type='application/json')
+
+def users_api(request):
+    user_list = {}
+    datas=[]
+    try:
+        users = User.objects.all()      
+        for user in users:
+            data = {
+                'id': user.id,
+                'username': user.username,         
+                'password':user.password,  
+                'is_superuser':user.is_superuser,  
+                'user.last_login':user.last_login.strftime('%Y-%m-%d \
+                                                           %H:%M:%S:%f')
+            }
+            print(user.last_login,type(user.last_login))
+            datas.append(data)
+    except Exception as e:
+        print(e)
+          
+    user_list['total']=len(users)
+    user_list['result']=datas
+    
+    datas = json.dumps(user_list, ensure_ascii=False)
+      
+    return HttpResponse(datas,content_type='application/json')
+
+
+
 def user_todos_api(request, user_id):
     todo_list = []
     try:

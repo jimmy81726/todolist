@@ -29,5 +29,8 @@ urlpatterns = [
     path('api/todos/<int:id>', views.todo_api, name='todo-api'),
     path('api/todos/user/<int:user_id>/',
          views.user_todos_api, name='user-todos-api'),
+    path('api/users/',views.users_api,name='users-api'),
+    path('api/users/<int:id>',views.user_api,name='user-api')
+    
 
 ]

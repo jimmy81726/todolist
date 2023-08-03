@@ -84,17 +84,17 @@ DATABASES = {
     }
 }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'todolist',
-        'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        # 'HOST': 'database-1.ap-northeast-1.rds.amazonaws.com',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'todolist',
+#         'USER': 'root',
+#         'PASSWORD': 'password',
+#         'HOST': 'localhost',
+#         # 'HOST': 'database-1.ap-northeast-1.rds.amazonaws.com',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # Password validation
