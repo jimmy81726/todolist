@@ -90,8 +90,8 @@ DATABASES = {
         'NAME': 'todolist',
         'USER': 'root',
         'PASSWORD': 'password',
-        'HOST': 'localhost',
-        # 'HOST': 'database-1.cr1dzex4jzdk.ap-northeast-1.rds.amazonaws.com',
+        # 'HOST': 'localhost',
+        'HOST': 'database-1.cy9x3whguoya.ap-northeast-1.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
